@@ -95,11 +95,15 @@ void game::TextEnteredEvent(sf::Event::TextEvent& text)
 
 void game::OnKeyPressed(sf::Event::KeyEvent& key)
 {
-	std::cout << "key pressed" << key.code << std::endl;
-	// std::cout << "control:" << key.control << std::endl;
-	// std::cout << "alt:" << key.alt << std::endl;
-	// std::cout << "shift:" << key.shift << std::endl;
-	// std::cout << "system:" << key.system << std::endl;
+	switch (key.code)
+	{
+		case (sf::Keyboard::Escape):
+			OnClose();
+			break;
+
+		default:
+			break;
+	}
 }
 
 void game::OnKeyReleased(sf::Event::KeyEvent& key)
