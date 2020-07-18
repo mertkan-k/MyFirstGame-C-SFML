@@ -2,7 +2,7 @@
 
 using namespace Game;
 
-void game::RefreshDisplay()
+void game::Render()
 {
 	sf::CircleShape shape(this->window->getSize().x / 2);
 	shape.setFillColor(sf::Color::White);

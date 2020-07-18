@@ -16,19 +16,14 @@ int main()
 	window.create(sf::VideoMode(200.0f * screenScalingFactor, 200.0f * screenScalingFactor), "SFML works!");
 	platform.setIcon(window.getSystemHandle());
 
-	sf::Event event;
-
 	Game::game game(&window);
 
 	while (window.isOpen())
 	{
-		while (window.pollEvent(event))
-		{
-			game.HandlePollEvent(event);
-		}
+		game.Update();
 
 		window.clear();
-		game.RefreshDisplay();
+		game.Render();
 		window.display();
 	}
 

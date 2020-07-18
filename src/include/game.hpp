@@ -16,6 +16,7 @@ public: /* constructor and destructor */
 
 public: /* functions from window management */
 	/* Calling from main.window.pollEvent */
+	void Update();
 	void HandlePollEvent(sf::Event& event);
 
 	/* General gui events */
@@ -43,7 +44,7 @@ public: /* functions from window management */
 
 public: /* functions from display */
 	/* Calling from main.window.isOpen() */
-	void RefreshDisplay();
+	void Render();
 }; // class game
 
 } // namespace Game
