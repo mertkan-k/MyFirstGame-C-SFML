@@ -2,21 +2,37 @@
 #define GAME_H
 
 #include "Platform/Platform.hpp"
+#include "include/config.hpp"
 
 namespace Game
 {
 class game
 {
 private:
-	sf::RenderWindow* window; /* Upper window */
+	util::Platform platform;  /* main platform */
+	sf::RenderWindow* window; /* main window */
+	Config config;			  /*  */
+	sf::Event event;		  /* handling events */
 
 public: /* constructor and destructor */
-	game(sf::RenderWindow* window);
+	game();
 	~game();
 
+public:
+	void Start(); /* start game with a while(true) */
+
+private:
+	/* Calling by constructor to init window */
+	void InitializeWindow();
+
+	/* Calling by constructor to init var */
+	void InitializeVariables();
+
 public: /* functions from window management */
-	/* Calling from main.window.pollEvent */
+	/* Calling from main.isOpen */
 	void Update();
+
+	/* Calling from this->Update */
 	void HandlePollEvent(sf::Event& event);
 
 	/* General gui events */

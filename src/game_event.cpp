@@ -140,7 +140,8 @@ void game::OnMouseButtonReleased(sf::Event::MouseButtonEvent& event)
 
 void game::OnMouseMoved(sf::Event::MouseMoveEvent& event)
 {
-	std::cout << "new mouse x: " << event.x << " y: " << event.y << std::endl;
+	std::ignore = event;
+	// std::cout << "new mouse x: " << event.x << " y: " << event.y << std::endl;
 }
 
 void game::OnMouseEntered()

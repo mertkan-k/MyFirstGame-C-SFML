@@ -2,19 +2,43 @@
 
 using namespace Game;
 
-game::game(sf::RenderWindow* window)
+game::game()
 {
-	this->window = window;
+	this->window = nullptr;
+
+	InitializeWindow();
+	InitializeVariables();
 }
 
 game::~game()
 {
+	delete this->window;
+}
+
+void game::InitializeWindow()
+{
+	this->window = new sf::RenderWindow(this->config.video_mode, "SFML works!");
+	platform.setIcon(this->window->getSystemHandle());
+}
+
+void game::InitializeVariables()
+{
+}
+
+void game::Start()
+{
+	while (this->window->isOpen())
+	{
+		this->Update();
+
+		this->window->clear();
+		this->Render();
+		this->window->display();
+	}
 }
 
 void game::Update()
 {
-	sf::Event event;
-
 	while (this->window->pollEvent(event))
 	{
 		HandlePollEvent(event);

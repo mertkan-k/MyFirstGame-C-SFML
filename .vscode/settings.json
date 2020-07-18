@@ -117,5 +117,11 @@
 	},
 	"[applescript]": {
 		"files.encoding": "utf8"
+	},
+	"files.exclude": {
+		"**/.DS_Store": false,
+		"**/.hg": false,
+		"**/.svn": false,
+		"**/CVS": false
 	}
 }
