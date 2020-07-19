@@ -3,16 +3,19 @@
 
 #include "Platform/Platform.hpp"
 #include "include/config.hpp"
+#include "include/window/window.hpp"
 
 namespace Game
 {
 class game
 {
 private:
-	util::Platform platform;  /* main platform */
-	sf::RenderWindow* window; /* main window */
-	Config config;			  /*  */
-	sf::Event event;		  /* handling events */
+	util::Platform platform;		 /* main platform */
+	sf::RenderWindow* window;		 /* main window */
+	Config config;					 /*  */
+	sf::Event event;				 /* handling events */
+	Window* gui;					 /* main gui window */
+	std::set<sf::Drawable*> windows; /* gui map */
 
 public: /* constructor and destructor */
 	game();

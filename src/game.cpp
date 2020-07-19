@@ -5,6 +5,7 @@ using namespace Game;
 game::game()
 {
 	this->window = nullptr;
+	this->gui = nullptr;
 
 	InitializeWindow();
 	InitializeVariables();
@@ -13,12 +14,6 @@ game::game()
 game::~game()
 {
 	delete this->window;
-}
-
-void game::InitializeWindow()
-{
-	this->window = new sf::RenderWindow(this->config.video_mode, "SFML works!");
-	platform.setIcon(this->window->getSystemHandle());
 }
 
 void game::InitializeVariables()
