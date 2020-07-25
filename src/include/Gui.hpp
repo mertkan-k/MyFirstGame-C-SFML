@@ -37,7 +37,7 @@ public:
 private:
 	bool is_show;
 	bool is_focus_in;
-	void (*mouse_button_func)(sf::Event::MouseButtonEvent& event);
+	std::function<void()> mouse_button_func;
 
 public:
 	bool IsShow() const;
@@ -45,8 +45,8 @@ public:
 	void Hide();
 	bool IsFocusIn();
 	void SetFocusIn(bool is);
-	void SetMouseButtonEvent(void (*func)(sf::Event::MouseButtonEvent& event));
-	bool OnMouseButton(sf::Event::MouseButtonEvent& event);
+	void SetMouseButtonEvent(std::function<void()> func);
+	bool OnMouseButton();
 
 	/*private:
 	sf::Vector2u size;

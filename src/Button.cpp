@@ -16,19 +16,6 @@ void Button::SetText(std::string sText)
 	if (text == nullptr)
 	{
 		text = new sf::Text(sText, font_manager.GetFont());
-		// text->setPosition(getPosition());
-		/*
-			btn->setSize(sf::Vector2f(120, 50));
-			btn->setPosition(sf::Vector2f(30, 50));
-		*/
-		// std::cout << text->getLocalBounds().height << std::endl;  // 22
-		// std::cout << text->getLocalBounds().left << std::endl;	  // 0
-		// std::cout << text->getLocalBounds().top << std::endl;	  // 8
-		// std::cout << text->getLocalBounds().width << std::endl;	  // 104
-		// std::cout << text->getGlobalBounds().height << std::endl; // 22
-		// std::cout << text->getGlobalBounds().left << std::endl;	  // 30
-		// std::cout << text->getGlobalBounds().top << std::endl;	  // 58
-		// std::cout << text->getGlobalBounds().width << std::endl;  // 104
 
 		float x = 0, y = 0;
 		x = getPosition().x + ((getSize().x - text->getLocalBounds().width - text->getLocalBounds().left) / 2);

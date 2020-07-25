@@ -118,7 +118,7 @@ void Gui::OnMouseMoved()
 				gui->OnMouseLeft();
 		}
 	});
-	// std::cout << name << __func__ << std::endl;
+	// std::cout << name << " : " << __func__ << std::endl;
 }
 
 void Gui::OnMouseEntered()
@@ -152,7 +152,7 @@ bool Gui::OnMouseButtonPressed(sf::Event::MouseButtonEvent& event)
 bool Gui::OnMouseButtonReleased(sf::Event::MouseButtonEvent& event)
 {
 	if (IsFocusIn())
-		if (OnMouseButton(event))
+		if (OnMouseButton())
 			return true;
 
 	if (Eventable::OnMouseButtonReleased(event))
@@ -167,23 +167,23 @@ bool Gui::OnMouseButtonReleased(sf::Event::MouseButtonEvent& event)
 	return handled;
 }
 
-void Gui::SetMouseButtonEvent(void (*func)(sf::Event::MouseButtonEvent& event))
+void Gui::SetMouseButtonEvent(std::function<void()> func)
 {
 	mouse_button_func = func;
 }
 
-bool Gui::OnMouseButton(sf::Event::MouseButtonEvent& event)
+bool Gui::OnMouseButton()
 {
-	if (*mouse_button_func)
+	if (mouse_button_func)
 	{
-		(*mouse_button_func)(event);
+		(mouse_button_func)();
 		return true;
 	}
 
 	bool handled = false;
 	std::for_each(children.begin(), children.end(), [&](Gui* w) {
 		if (w->IsFocusIn() && !handled)
-			handled = w->OnMouseButton(event);
+			handled = w->OnMouseButton();
 	});
 
 	return handled;
@@ -191,16 +191,14 @@ bool Gui::OnMouseButton(sf::Event::MouseButtonEvent& event)
 
 void Gui::Draw()
 {
+	if (!IsShow())
+		return;
+
 	this->window_manager->draw(*this);
 	std::for_each(children.begin(), children.end(), [&](Gui* gui) {
-		gui->Draw();
-		// this->window_manager->draw(*gui);
-		/*if (instanceof <Button>(gui))
+		if (gui->IsShow())
 		{
-			if (((Button*)gui)->GetTextObject())
-			{
-				this->window_manager->draw(*((Button*)gui)->GetTextObject());
-			}
-		}*/
+			gui->Draw();
+		}
 	});
 }
