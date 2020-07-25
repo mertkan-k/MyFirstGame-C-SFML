@@ -2,24 +2,24 @@
 #define GAME_H
 
 #include "Platform/Platform.hpp"
+#include "include/Eventable.hpp"
+#include "include/Gui.hpp"
 #include "include/config.hpp"
-#include "include/window/window.hpp"
+// #include "include/window/window.hpp"
 
-namespace Game
-{
-class game
+class Game : public Eventable
 {
 private:
-	util::Platform platform;		 /* main platform */
-	sf::RenderWindow* window;		 /* main window */
-	Config config;					 /*  */
-	sf::Event event;				 /* handling events */
-	Window* gui;					 /* main gui window */
-	std::set<sf::Drawable*> windows; /* gui map */
+	util::Platform platform;  /* main platform */
+	sf::RenderWindow* window; /* main window */
+	Config config;			  /*  */
+	sf::Event event;		  /* handling events */
+	Gui* gui;				  /* main gui for manage */
+							  // std::set<Window*> windows; /* gui map */
 
 public: /* constructor and destructor */
-	game();
-	~game();
+	Game();
+	~Game();
 
 public:
 	void Start(); /* start game with a while(true) */
@@ -35,11 +35,8 @@ public: /* functions from window management */
 	/* Calling from main.isOpen */
 	void Update();
 
-	/* Calling from this->Update */
-	void HandlePollEvent(sf::Event& event);
-
 	/* General gui events */
-	void OnClose();
+	virtual void OnClose();
 	void OnResize(sf::Event::SizeEvent& size);
 
 	/* Focus events */
@@ -55,17 +52,15 @@ public: /* functions from window management */
 
 	/* Mouse events */
 	void OnMouseWhell(sf::Event::MouseWheelScrollEvent& event);
-	void OnMouseButtonPressed(sf::Event::MouseButtonEvent& event);
-	void OnMouseButtonReleased(sf::Event::MouseButtonEvent& event);
-	void OnMouseMoved(sf::Event::MouseMoveEvent& event);
-	void OnMouseEntered();
-	void OnMouseLeft();
+	virtual bool OnMouseButtonPressed(sf::Event::MouseButtonEvent& event);
+	virtual bool OnMouseButtonReleased(sf::Event::MouseButtonEvent& event);
+	virtual void OnMouseMoved();
+	virtual void OnMouseEntered();
+	virtual void OnMouseLeft();
 
 public: /* functions from display */
 	/* Calling from main.window.isOpen() */
 	void Render();
 }; // class game
-
-} // namespace Game
 
 #endif // GAME_H

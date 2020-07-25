@@ -1,99 +1,34 @@
 #include "include/game.hpp"
 
-using namespace Game;
-
-void game::HandlePollEvent(sf::Event& event)
-{
-	switch (event.type)
-	{
-		using namespace sf;
-
-		case (Event::Closed):
-			OnClose();
-			break;
-
-		case (Event::Resized):
-			OnResize(event.size);
-			break;
-
-		case (Event::LostFocus):
-			OnLostFocus();
-			break;
-
-		case (Event::GainedFocus):
-			OnGainedFocus();
-			break;
-
-		case (Event::TextEntered):
-			// TextEnteredEvent(event->text);
-			break;
-
-		case (Event::KeyPressed):
-			OnKeyPressed(event.key);
-			break;
-
-		case (Event::KeyReleased):
-			OnKeyReleased(event.key);
-			break;
-
-		case (Event::MouseWheelScrolled):
-			OnMouseWhell(event.mouseWheelScroll);
-			break;
-
-		case (Event::MouseButtonPressed):
-			OnMouseButtonPressed(event.mouseButton);
-			break;
-
-		case (Event::MouseButtonReleased):
-			OnMouseButtonReleased(event.mouseButton);
-			break;
-
-		case (Event::MouseMoved):
-			OnMouseMoved(event.mouseMove);
-			break;
-
-		case (Event::MouseEntered):
-			OnMouseEntered();
-			break;
-
-		case (Event::MouseLeft):
-			OnMouseLeft();
-			break;
-
-		default:
-			break;
-	}
-}
-
-void game::OnClose()
+void Game::OnClose()
 {
 	std::cout << "window closed" << std::endl;
 	this->window->close();
 }
 
-void game::OnResize(sf::Event::SizeEvent& size)
+void Game::OnResize(sf::Event::SizeEvent& size)
 {
 	std::cout << "new width: " << size.width << std::endl;
 	std::cout << "new height: " << size.height << std::endl;
 }
 
-void game::OnLostFocus()
+void Game::OnLostFocus()
 {
 	std::cout << "focus losted" << std::endl;
 }
 
-void game::OnGainedFocus()
+void Game::OnGainedFocus()
 {
 	std::cout << "focus gained" << std::endl;
 }
 
-void game::TextEnteredEvent(sf::Event::TextEvent& text)
+void Game::TextEnteredEvent(sf::Event::TextEvent& text)
 {
 	if (text.unicode < 128)
 		std::cout << "ASCII character typed: " << static_cast<char>(text.unicode) << std::endl;
 }
 
-void game::OnKeyPressed(sf::Event::KeyEvent& key)
+void Game::OnKeyPressed(sf::Event::KeyEvent& key)
 {
 	switch (key.code)
 	{
@@ -106,12 +41,12 @@ void game::OnKeyPressed(sf::Event::KeyEvent& key)
 	}
 }
 
-void game::OnKeyReleased(sf::Event::KeyEvent& key)
+void Game::OnKeyReleased(sf::Event::KeyEvent& key)
 {
 	std::cout << "key released" << key.code << std::endl;
 }
 
-void game::OnMouseWhell(sf::Event::MouseWheelScrollEvent& event)
+void Game::OnMouseWhell(sf::Event::MouseWheelScrollEvent& event)
 {
 	if (event.wheel == sf::Mouse::VerticalWheel)
 		std::cout << "wheel type: vertical" << std::endl;
@@ -124,34 +59,40 @@ void game::OnMouseWhell(sf::Event::MouseWheelScrollEvent& event)
 	// std::cout << "mouse y: " << event.y << std::endl;
 }
 
-void game::OnMouseButtonPressed(sf::Event::MouseButtonEvent& event)
+bool Game::OnMouseButtonPressed(sf::Event::MouseButtonEvent& event)
 {
-	std::cout << "mouse button pressed" << event.button << std::endl;
+	return this->gui->OnMouseButtonPressed(event);
+	// std::ignore = event;
+	// this->gui->OnMouseButtonPressed(event.button);
+	// std::cout << "mouse button pressed" << event.button << std::endl;
 	// std::cout << "mouse x: " << event.x << std::endl;
 	// std::cout << "mouse y: " << event.y << std::endl;
 }
 
-void game::OnMouseButtonReleased(sf::Event::MouseButtonEvent& event)
+bool Game::OnMouseButtonReleased(sf::Event::MouseButtonEvent& event)
 {
-	std::cout << "mouse button released" << event.button << std::endl;
+	return this->gui->OnMouseButtonReleased(event);
+	// std::ignore = event;
+	// this->gui->OnMouseButtonReleased(event.button);
+	// std::cout << "mouse button released" << event.button << std::endl;
 	// std::cout << "mouse x: " << event.x << std::endl;
 	// std::cout << "mouse y: " << event.y << std::endl;
 }
 
-void game::OnMouseMoved(sf::Event::MouseMoveEvent& event)
+void Game::OnMouseMoved()
 {
 	// std::ignore = event;
-	this->gui->OnMouseMove(event.x, event.y);
+	this->gui->OnMouseMoved();
 }
 
-void game::OnMouseEntered()
+void Game::OnMouseEntered()
 {
 	std::cout << "the mouse cursor has entered the window" << std::endl;
-	// auto pos = sf::Mouse().getPosition();
-	// this->gui->OnMouseEnter(pos.x, pos.y);
+	// this->gui->OnMouseEntered();
 }
 
-void game::OnMouseLeft()
+void Game::OnMouseLeft()
 {
 	std::cout << "the mouse cursor has left the window" << std::endl;
+	// this->gui->OnMouseLeft();
 }

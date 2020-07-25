@@ -1,26 +1,24 @@
-#include "include/game.hpp"
+#include "include/Game.hpp"
 
-using namespace Game;
-
-game::game()
+Game::Game()
 {
 	this->window = nullptr;
-	this->gui = nullptr;
+	// this->gui = nullptr;
 
 	InitializeWindow();
 	InitializeVariables();
 }
 
-game::~game()
+Game::~Game()
 {
 	delete this->window;
 }
 
-void game::InitializeVariables()
+void Game::InitializeVariables()
 {
 }
 
-void game::Start()
+void Game::Start()
 {
 	while (this->window->isOpen())
 	{
@@ -32,7 +30,7 @@ void game::Start()
 	}
 }
 
-void game::Update()
+void Game::Update()
 {
 	while (this->window->pollEvent(event))
 	{

@@ -6,7 +6,7 @@ int main()
 	std::cout << "Hello Debug!" << std::endl;
 #endif
 
-	Game::game my_game;
+	Game my_game;
 	my_game.Start();
 
 	return 0;

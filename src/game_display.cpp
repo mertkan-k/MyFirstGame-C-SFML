@@ -1,24 +1,56 @@
+#include "include/Button.hpp"
 #include "include/game.hpp"
-#include "include/window/button.hpp"
 
-using namespace Game;
+void sayPressed(sf::Event::MouseButtonEvent& event);
+void sayPressed(sf::Event::MouseButtonEvent& event)
+{
+	std::cout << __func__ << event.button << std::endl;
+}
 
-void game::InitializeWindow()
+void sayReleased(sf::Event::MouseButtonEvent& event);
+void sayReleased(sf::Event::MouseButtonEvent& event)
+{
+	std::cout << __func__ << event.button << std::endl;
+}
+
+void sayButton(sf::Event::MouseButtonEvent& event);
+void sayButton(sf::Event::MouseButtonEvent& event)
+{
+	std::cout << __func__ << event.button << std::endl;
+}
+
+void Game::InitializeWindow()
 {
 	this->window = new sf::RenderWindow(this->config.video_mode, "SFML works!");
 	platform.setIcon(this->window->getSystemHandle());
 
-	this->gui = new Window();
-	this->gui->SetSize(this->config.video_mode.width, this->config.video_mode.height);
+	this->gui = new Gui(this->window);
+	this->gui->setSize(sf::Vector2f(config.video_mode.width, config.video_mode.height));
 
-	Button* btn = new Button(this->gui);
-	btn->SetSize(120, 50);
-	btn->SetName("button");
+	Button* btn = new Button();
+	btn->setSize(sf::Vector2f(120, 50));
+	btn->setPosition(sf::Vector2f(30, 50));
+	btn->SetFillColor(Button::State::NORMAL, sf::Color::Blue);
+	btn->SetFillColor(Button::State::ON_OVER, sf::Color::Red);
+	btn->SetText("SelamM");
+	this->gui->AddChild(btn);
+	btn->SetName("my main button");
+	// btn->SetMouseButtonPressedEvent(sayPressed);
+	// btn->SetMouseButtonReleasedEvent(sayReleased);
+	btn->SetMouseButtonEvent(sayButton);
+	// btn->Show();
 
-	windows.insert(btn);
+	// Button* btn2 = new Button(this->gui);
+	// btn2->SetPosition(200, 200);
+	// btn2->SetSize(120, 50);
+	// btn2->SetFillColor(Button::State::NORMAL, sf::Color::Black);
+	// btn2->SetFillColor(Button::State::ON_OVER, sf::Color::White);
+	// btn2->SetName("button2");
+	// btn2->Show();
+	// windows.insert(btn2);
 }
 
-void game::Render()
+void Game::Render()
 {
 	// sf::CircleShape shape(this->window->getSize().x / 2);
 	// shape.setFillColor(sf::Color::White);
@@ -26,10 +58,7 @@ void game::Render()
 	// sf::Texture shapeTexture;
 	// shapeTexture.loadFromFile("content/sfml.png");
 	// shape.setTexture(&shapeTexture);
+	this->window->draw(*this->gui);
 
-	// sf::RectangleShape btn(sf::Vector2f(120, 50));
-
-	std::for_each(windows.begin(), windows.end(), [this](sf::Drawable* w) {
-		this->window->draw(*w);
-	});
+	this->gui->Draw();
 }
