@@ -67,3 +67,68 @@ void Button::OnMouseLeft()
 	// std::cout << typeid(*this).name() << " : " << __func__ << std::endl;
 	setFillColor(states[NORMAL]);
 }
+
+bool Button::OnMouseButtonPressed(sf::Event::MouseButtonEvent& event)
+{
+	setFillColor(states[ON_CLICKED]);
+	return Gui::OnMouseButtonPressed(event);
+	// std::cout << typeid(*this).name() << " : " << __func__ << std::endl;
+}
+
+void Button::setPosition(float x, float y)
+{
+	// if (GetParent())
+	// {
+	// 	x += GetParent()->getPosition().x;
+	// 	y += GetParent()->getPosition().y;
+	// }
+	Gui::setPosition(x, y);
+	if (text)
+		text->setPosition(x, y);
+}
+
+ToggleButton::ToggleButton()
+{
+}
+
+ToggleButton::~ToggleButton()
+{
+}
+
+void ToggleButton::OnMouseEntered()
+{
+	if (!IsPressed())
+		setFillColor(states[ON_OVER]);
+
+	Gui::OnMouseEntered();
+	// std::cout << typeid(*this).name() << " : " << __func__ << std::endl;
+}
+
+void ToggleButton::OnMouseLeft()
+{
+	if (!IsPressed())
+		setFillColor(states[NORMAL]);
+
+	Gui::OnMouseLeft();
+	// std::cout << typeid(*this).name() << " : " << __func__ << std::endl;
+}
+
+bool ToggleButton::OnMouseButtonPressed(sf::Event::MouseButtonEvent& event)
+{
+	std::ignore = event;
+
+	if (IsPressed())
+	{
+		SetPressed(false);
+		setFillColor(states[NORMAL]);
+	}
+	else
+	{
+		SetPressed(true);
+		setFillColor(states[ON_CLICKED]);
+	}
+
+	return true;
+	// return Gui::OnMouseButtonPressed(event);
+	// std::cout << typeid(*this).name() << " : " << __func__ << std::endl;
+}

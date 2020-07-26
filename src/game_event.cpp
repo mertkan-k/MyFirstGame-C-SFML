@@ -94,5 +94,5 @@ void Game::OnMouseEntered()
 void Game::OnMouseLeft()
 {
 	std::cout << "the mouse cursor has left the window" << std::endl;
-	// this->gui->OnMouseLeft();
+	this->gui->OnMouseLeft();
 }

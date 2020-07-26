@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "Platform/Platform.hpp"
+#include "include/Button.hpp"
 #include "include/Eventable.hpp"
 #include "include/Gui.hpp"
 #include "include/config.hpp"
@@ -61,6 +62,23 @@ public: /* functions from window management */
 public: /* functions from display */
 	/* Calling from main.window.isOpen() */
 	void Render();
+
+public: /* functions for interface */
+	enum Interface
+	{
+		MAIN_MENU,
+		MAIN_MENU2,
+
+		INTERFACE_END,
+		INTERFACE_BEGIN = MAIN_MENU,
+	};
+
+private:
+	std::map<Interface, Gui*> interfaces;
+	void InitInterfaces();
+	void OnMainMenuButton1Click();
+	void OnMainMenuButton2Click();
+
 }; // class game
 
 #endif // GAME_H

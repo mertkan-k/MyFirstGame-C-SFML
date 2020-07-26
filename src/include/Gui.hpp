@@ -4,6 +4,8 @@
 #include "include/Eventable.hpp"
 #include "include/font_manager.hpp"
 
+#define GOTIT() std::cout << GetName() << " : " << __func__ << std::endl;
+
 class Gui : public sf::RectangleShape, public Eventable
 {
 	/* Constuctors and destructors */
@@ -20,12 +22,19 @@ public:
 	void SetName(std::string name);
 	std::string& GetName();
 
-	/*private:
+private:
 	Gui* parent;
 
 public:
-	Gui* GetParent();
-	Gui* GetAncestor();*/
+	void SetParent(Gui* par)
+	{
+		parent = par;
+	};
+	Gui* GetParent()
+	{
+		return parent;
+	};
+	Gui* GetAncestor();
 
 private:
 	std::set<Gui*> children;
@@ -45,6 +54,7 @@ public:
 	void Hide();
 	bool IsFocusIn();
 	void SetFocusIn(bool is);
+	virtual void setPosition(float x, float y);
 	void SetMouseButtonEvent(std::function<void()> func);
 	bool OnMouseButton();
 

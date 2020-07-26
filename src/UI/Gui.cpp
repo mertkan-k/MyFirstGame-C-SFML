@@ -20,6 +20,7 @@ Gui::Gui(sf::RenderWindow* mng)
 }
 void Gui::InitEvents()
 {
+	parent = nullptr;
 	is_focus_in = false;
 	is_show = true;
 	mouse_button_func = nullptr;
@@ -68,6 +69,7 @@ void Gui::Show()
 }
 void Gui::Hide()
 {
+	GOTIT()
 	is_show = false;
 }
 
@@ -86,6 +88,7 @@ void Gui::RemoveChild(Gui* child)
 }
 void Gui::AddChild(Gui* child)
 {
+	child->SetParent(this);
 	children.insert(child);
 }
 
@@ -130,6 +133,9 @@ void Gui::OnMouseLeft()
 {
 	Eventable::SetMouseIn(false);
 	SetFocusIn(false);
+	std::for_each(children.begin(), children.end(), [&](Gui* w) {
+		w->OnMouseLeft();
+	});
 	// std::cout << name << __func__ << std::endl;
 }
 
@@ -201,4 +207,21 @@ void Gui::Draw()
 			gui->Draw();
 		}
 	});
+}
+
+void Gui::setPosition(float x, float y)
+{
+	std::for_each(children.begin(), children.end(), [&](Gui* gui) {
+		if (gui->IsShow())
+		{
+			gui->setPosition(x, y);
+		}
+	});
+	if (parent)
+	{
+		x += parent->getPosition().x;
+		y += parent->getPosition().y;
+	}
+	sf::RectangleShape::setPosition(x, y);
+	// sf::RectangleShape::setPosition(sf::Vector2f(x, y));
 }
